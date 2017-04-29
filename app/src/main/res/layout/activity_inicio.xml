@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.pedro.ofertapp.InicioActivity"
+    android:gravity="center"
+    android:padding="30dp"
+    android:background="@drawable/background"
+    android:theme="@android:style/Theme.NoTitleBar">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OfertAPP"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Login"
+        android:id="@+id/button_loggin"
+        android:onClick="lanzarLogin"
+        android:gravity="center" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Registro"
+        android:id="@+id/button_registro"
+        android:onClick="lanzarRegistro"
+        android:gravity="center" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Acercade"
+        android:id="@+id/button_acercaDe"
+        android:onClick="lanzarAcercaDe"
+        android:gravity="center" />
+
+</LinearLayout>

@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">OfertAPP</string>
+    <string name="Login">Login</string>
+    <string name="Registro">Registro</string>
+    <!--Acerca De-->
+    <string name="Acercade">Acerca de</string>
+    <string name="textoAcercaDe">Esta aplicación ha sido desarrollado como trabajo final de máster en
+        Ingeniería Informática en la Universidad de Alicante, por el alumno Pedro Gómez Valdés</string>
+
+    <!--Registro-->
+    <string name="registro_nombre">¿Cómo te llamas?</string>
+    <string name="registro_email">¿Correo electrónico?</string>
+    <string name="registro_telefono">Tu teléfono de contacto</string>
+    <string name="registro_descripcion">Breve descripción personal</string>
+    <string name="registro_button">Registrarse</string>
+    <string name="mensaje_ok_registro">Usuario correctamente registrado</string>
+    <string name="mensaje_fail_registro">Email ya existente</string>
+    <string name="mensaje_error_registro">Ups! Ha ocurrido un problema</string>
+
+    <!--Login-->
+    <string name="mensaje_error_login">Ha ocurrido un problema con el login</string>
+    <string name="mensaje_ok_login">Login correcto</string>
+    <string name="mensaje_error_login_user">El usuario no está dado de alta</string>
+
+    <!--Mi perfil->menú-->
+    <string name="buscar_anuncios">Buscar</string>
+    <string name="editar_perfil">Mi perfil</string>
+    <string name="publicar">Nuevo anuncio</string>
+    <string name="eliminar">Eliminar perfil</string>
+    <string name="mis_anuncios">Mis anuncios</string>
+
+    <!--Mi perfil->Eliminar usuario-->
+    <string name="mensaje_ok_delete_user">Usuario eliminado correctamente</string>
+    <string name="mensaje_error_delete_user">No se ha podido borrar el usuario</string>
+</resources>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:context="com.example.pedro.ofertapp.ProfileActivity"
+android:gravity="center"
+android:padding="30dp"
+android:background="@drawable/background"
+android:theme="@android:style/Theme.NoTitleBar">
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="New Text"
+    android:id="@+id/mensaje_inicio"
+    android:textSize="25sp"
+    android:layout_centerHorizontal="true"
+    android:gravity="center"
+    android:textColor="#000000" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="25dp">
+</LinearLayout>
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/buscar_anuncios"
+    android:id="@+id/button_buscar"
+    android:gravity="center" />
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/editar_perfil"
+    android:id="@+id/button_editar_perfil"
+    android:gravity="center" />
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/mis_anuncios"
+    android:id="@+id/mis_anuncios"
+    android:gravity="center" />
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/publicar"
+    android:id="@+id/publicar_anuncio"
+    android:gravity="center" />
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/eliminar"
+    android:id="@+id/eliminar_perfil"
+    android:gravity="center" />
+
+</LinearLayout>
