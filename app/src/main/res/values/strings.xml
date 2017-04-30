@@ -32,4 +32,8 @@
     <!--Mi perfil->Eliminar usuario-->
     <string name="mensaje_ok_delete_user">Usuario eliminado correctamente</string>
     <string name="mensaje_error_delete_user">No se ha podido borrar el usuario</string>
+
+    <!--Nuevo anuncio-->
+    <string name="mensaje_ok_nuevo_anuncio">Anuncio creado correctamente</string>
+    <string name="mensaje_fail_nuevo_anuncio">Error al crear el anuncio</string>
 </resources>

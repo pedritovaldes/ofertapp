@@ -2,14 +2,26 @@ package com.example.pedro.ofertapp;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -33,6 +45,8 @@ public class NuevoAnuncioActivity extends Activity {
     private EditText precio_max;
     private EditText descripcion;
 
+    public static final int CONNECTION_TIMEOUT=10000;
+    public static final int READ_TIMEOUT=15000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,9 +96,114 @@ public class NuevoAnuncioActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pdLoading.setMessage("Cargando...");
+            pdLoading.setMessage("Enviando...");
             pdLoading.setCancelable(false);
             pdLoading.show();
         }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                url = new URL("http://10.0.2.2:80/api/v1/anuncio");
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return "exception";
+            }
+
+            try  {
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(READ_TIMEOUT);
+                conn.setConnectTimeout(CONNECTION_TIMEOUT);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty( "charset", "utf-8");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                //Agregamos parametros a la URL
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("titulo", params[0])
+                        .appendQueryParameter("sector_profesional", params[1])
+                        .appendQueryParameter("provincia", params[2])
+                        .appendQueryParameter("precio_maximo", params[3])
+                        .appendQueryParameter("descripcion", params[4])
+                        .appendQueryParameter("user_id", usuario_loggeado.getId().toString());
+
+                String query = builder.build().getEncodedQuery();
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+                conn.connect();
+
+            } catch (IOException e1) {
+
+                e1.printStackTrace();
+                return "exception";
+            }
+
+            try {
+
+                int response_code = conn.getResponseCode();
+
+                if (response_code == HttpURLConnection.HTTP_OK) {
+
+                    //Leemos lo que nos devuelve el servidor
+                    InputStream input = conn.getInputStream();
+                    String result = convertStreamToString(input);
+                    input.close();
+
+                    //Pasamos a onPostExecute
+                    return result.toString();
+
+                } else {
+                    return ("unsuccesful");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "exception";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            super.onPostExecute(result);
+            pdLoading.dismiss();
+
+            String message;
+            Integer code;
+
+            try {
+
+                JSONObject obj = new JSONObject(result);
+                code = obj.getInt("code");
+
+                if(code.equals(201)) {
+                    Toast.makeText(NuevoAnuncioActivity.this, R.string.mensaje_ok_nuevo_anuncio, Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                    i.putExtra("user", usuario_loggeado);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getApplicationContext().startActivity(i);
+
+                } else if(code.equals(400)) {
+                    Toast.makeText(NuevoAnuncioActivity.this, R.string.mensaje_fail_nuevo_anuncio, Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    static String convertStreamToString(java.io.InputStream is) {
+        java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+        return s.hasNext() ? s.next() : "";
     }
 }
