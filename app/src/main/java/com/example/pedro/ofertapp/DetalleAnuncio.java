@@ -1,8 +1,12 @@
 package com.example.pedro.ofertapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -26,6 +30,8 @@ public class DetalleAnuncio extends Activity {
             "Hostelería", "Mantenimiento", "Sanitario", "Transporte", "Investigación", "Administraciones", "Ingenieros"};
 
     private String[] provincias = {"Seleccionar", "Álava", "Albaecete","Alicante", "Almería", "Madrid"};
+
+    private Button modificarDatos, eliminarAnuncio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,14 @@ public class DetalleAnuncio extends Activity {
 
         detalleDescripcion = (EditText)findViewById(R.id.detalleTextoAnuncio);
         detalleDescripcion.setText(this.descripcionAnuncio);
+
+        eliminarAnuncio = (Button)findViewById(R.id.buttonEliminarAnuncio);
+        eliminarAnuncio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmDelete();
+            }
+        });
     }
 
     private void setAnuncio(Bundle bundle) {
@@ -81,5 +95,33 @@ public class DetalleAnuncio extends Activity {
 
         int spinnerPositionProvincias = adapterProvincias.getPosition(this.provinciaAnuncio);
         spinner_provincias.setSelection(spinnerPositionProvincias);
+    }
+
+    private void confirmDelete() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(DetalleAnuncio.this);
+
+        builder.setMessage(R.string.deleteMessage)
+                .setTitle(R.string.deleteConfirmTitle)
+                .setPositiveButton(R.string.deleteOptionYes,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteAnuncio(idAnuncio);
+                            }
+                        })
+                .setNegativeButton(R.string.deleteOptionCancel,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void deleteAnuncio(String idAnuncio) {
+
     }
 }
