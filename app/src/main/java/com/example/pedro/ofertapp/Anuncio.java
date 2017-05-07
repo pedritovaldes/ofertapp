@@ -10,7 +10,7 @@ public class Anuncio {
     private Integer user_id;
     private String provincia;
     private String sector_profesional;
-    private Integer precio_max;
+    private Integer precio_maximo;
     private String descripcion;
 
     public Integer getId() {
@@ -53,12 +53,12 @@ public class Anuncio {
         this.provincia = provincia;
     }
 
-    public Integer getPrecio_max() {
-        return precio_max;
+    public Integer getPrecio_maximo() {
+        return precio_maximo;
     }
 
-    public void setPrecio_max(Integer precio_max) {
-        this.precio_max = precio_max;
+    public void setPrecio_maximo(Integer precio_maximo) {
+        this.precio_maximo = precio_maximo;
     }
 
     public String getDescripcion() {

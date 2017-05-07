@@ -26,6 +26,7 @@
         <activity android:name=".ProfileActivity">Perfil</activity>
         <activity android:name=".NuevoAnuncioActivity">Nuevo Anuncio</activity>
         <activity android:name=".MisAnunciosActivity">Mis Anuncios</activity>
+        <activity android:name=".DetalleAnuncio">Detalle Anuncio</activity>
     </application>
 
 </manifest>
