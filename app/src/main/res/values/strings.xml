@@ -50,4 +50,7 @@
     <string name="deleteConfirmTitle">Confirmar</string>
     <string name="deleteOptionYes">Sí</string>
     <string name="deleteOptionCancel">Cancelar</string>
+    <string name="mensaje_ok_delete_anuncio">Anuncio borrado correctamente</string>
+    <string name="mensaje_error_delete_anuncio">Ha ocurrido un problema</string>
+    <string name="deleteMessageLoading">Eliminando...</string>
 </resources>
