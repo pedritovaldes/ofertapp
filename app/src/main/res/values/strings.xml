@@ -54,4 +54,6 @@
     <string name="mensaje_error_delete_anuncio">Ha ocurrido un problema</string>
     <string name="deleteMessageLoading">Eliminando...</string>
     <string name="modifyMessage">¿Desea modificar el anuncio?</string>
+    <string name="mensaje_accion_ok">Acción completada</string>
+    <string name="mensaje_accion_error">Ha ocurrido algún problema</string>
 </resources>

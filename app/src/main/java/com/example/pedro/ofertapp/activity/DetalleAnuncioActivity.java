@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -46,7 +47,7 @@ public class DetalleAnuncioActivity extends Activity {
     private String[] sectores = {"Seleccionar","Agricultura", "Minería", "Siderurgia", "Ganadería", "Pesca", "Construcción", "Industrías de procesado", "Fabricación",
             "Hostelería", "Mantenimiento", "Sanitario", "Transporte", "Investigación", "Administraciones", "Ingenieros"};
 
-    private String[] provincias = {"Seleccionar", "Álava", "Albaecete","Alicante", "Almería", "Madrid"};
+    private String[] provincias = {"Seleccionar", "Álava", "Albacete","Alicante", "Almería", "Madrid"};
 
     private Button modificarDatos, eliminarAnuncio;
 
@@ -158,7 +159,7 @@ public class DetalleAnuncioActivity extends Activity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //deleteAnuncio(idAnuncio);
+                                modify(idAnuncio);
                             }
                         })
                 .setNegativeButton(R.string.optionCancel,
@@ -174,10 +175,21 @@ public class DetalleAnuncioActivity extends Activity {
 
     private void deleteAnuncio(String idAnuncio) {
 
-        new AsyncLogin().execute(Integer.parseInt(idAnuncio));
+        new AsyncLogin().execute("delete", idAnuncio);
     }
 
-    private class AsyncLogin extends AsyncTask<Integer, String, String> {
+    private void modify(String idAnuncio) {
+
+        String modifyTitulo = detalleTituloAnuncio.getText().toString();
+        String modifySector = spinner_sectores.getSelectedItem().toString();
+        String modifyProvincia = spinner_provincias.getSelectedItem().toString();
+        String modifyPrecio = detallePrecio.getText().toString();
+        String modifyDesc = detalleDescripcion.getText().toString();
+
+        new AsyncLogin().execute("modify", idAnuncio,modifyTitulo, modifySector, modifyProvincia, modifyPrecio, modifyDesc);
+    }
+
+    private class AsyncLogin extends AsyncTask<String, String, String> {
 
         ProgressDialog pdLoading = new ProgressDialog(DetalleAnuncioActivity.this);
         HttpURLConnection conn;
@@ -186,16 +198,16 @@ public class DetalleAnuncioActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pdLoading.setMessage("Eliminando...");
+            pdLoading.setMessage("Enviando datos...");
             pdLoading.setCancelable(false);
             pdLoading.show();
         }
 
         @Override
-        protected String doInBackground(Integer... params) {
+        protected String doInBackground(String... params) {
 
             try {
-                url = new URL("http://10.0.2.2:80/api/v1/anuncio/"+params[0]);
+                url = new URL("http://10.0.2.2:80/api/v1/anuncio/"+Integer.parseInt(params[1]));
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -207,7 +219,7 @@ public class DetalleAnuncioActivity extends Activity {
                 conn.setReadTimeout(READ_TIMEOUT);
                 conn.setConnectTimeout(CONNECTION_TIMEOUT);
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                conn.setRequestMethod("DELETE");
+                conn.setRequestMethod((params[0] == "delete") ? "DELETE" : "PUT");
                 conn.setRequestProperty( "charset", "utf-8");
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
@@ -215,6 +227,19 @@ public class DetalleAnuncioActivity extends Activity {
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
                         new OutputStreamWriter(os, "UTF-8"));
+
+                if(params[0] == "modify") {
+
+                    Uri.Builder builder = new Uri.Builder()
+                            .appendQueryParameter("titulo", params[2])
+                            .appendQueryParameter("sector_profesional", params[3])
+                            .appendQueryParameter("provincia", params[4])
+                            .appendQueryParameter("precio_maximo", params[5])
+                            .appendQueryParameter("descripcion", params[6]);
+
+                    String query = builder.build().getEncodedQuery();
+                    writer.write(query);
+                }
 
                 writer.flush();
                 writer.close();
@@ -263,14 +288,14 @@ public class DetalleAnuncioActivity extends Activity {
 
                 if(code.equals(200)) {
 
-                    Toast.makeText(DetalleAnuncioActivity.this, R.string.mensaje_ok_delete_anuncio, Toast.LENGTH_LONG).show();
+                    Toast.makeText(DetalleAnuncioActivity.this, R.string.mensaje_accion_ok, Toast.LENGTH_LONG).show();
                     Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
                     i.putExtra("user", usuario_loggeado);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(i);
 
                 } else {
-                    Toast.makeText(DetalleAnuncioActivity.this, R.string.mensaje_error_delete_anuncio, Toast.LENGTH_LONG).show();
+                    Toast.makeText(DetalleAnuncioActivity.this, R.string.mensaje_accion_error, Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
