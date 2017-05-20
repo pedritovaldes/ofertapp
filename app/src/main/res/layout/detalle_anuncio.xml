@@ -166,7 +166,9 @@ android:theme="@android:style/Theme.NoTitleBar">
                     android:textSize="16dp"
                     android:singleLine="false"
                     android:textColor="#fff"
-                    android:inputType="text" />
+                    android:inputType="textMultiLine"
+                    android:lines="8"
+                    android:scrollbars="vertical"/>
             </LinearLayout>
 
             <Button
