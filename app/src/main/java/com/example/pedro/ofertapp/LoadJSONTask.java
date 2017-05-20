@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.example.pedro.ofertapp.model.Anuncio;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -13,8 +14,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
-
-import javax.ws.rs.core.Response;
 
 /**
  * Created by Pedro on 01/05/2017.

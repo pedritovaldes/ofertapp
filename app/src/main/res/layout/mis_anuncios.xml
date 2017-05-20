@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:theme="@android:style/Theme.NoTitleBar"
-    tools:context="com.example.pedro.ofertapp.MisAnunciosActivity">
+    tools:context=".activity.MisAnunciosActivity">
 
     <ListView
         android:id="@+id/list_view"

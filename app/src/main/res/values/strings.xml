@@ -47,10 +47,11 @@
     <string name="detallePrecio">Precio max</string>
     <string name="detalleDescripcion">Descripción</string>
     <string name="deleteMessage">¿Desea borrar el anuncio?</string>
-    <string name="deleteConfirmTitle">Confirmar</string>
-    <string name="deleteOptionYes">Sí</string>
-    <string name="deleteOptionCancel">Cancelar</string>
+    <string name="confirmTitle">Confirmar</string>
+    <string name="optionYes">Sí</string>
+    <string name="optionCancel">Cancelar</string>
     <string name="mensaje_ok_delete_anuncio">Anuncio borrado correctamente</string>
     <string name="mensaje_error_delete_anuncio">Ha ocurrido un problema</string>
     <string name="deleteMessageLoading">Eliminando...</string>
+    <string name="modifyMessage">¿Desea modificar el anuncio?</string>
 </resources>

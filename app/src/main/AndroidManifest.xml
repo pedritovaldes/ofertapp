@@ -13,20 +13,20 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AcercaDe">Acerca De</activity>
-        <activity android:name=".RegistroActivity">Registro</activity>
-        <activity android:name=".InicioActivity">Login</activity>
-        <activity android:name=".ProfileActivity">Perfil</activity>
-        <activity android:name=".NuevoAnuncioActivity">Nuevo Anuncio</activity>
-        <activity android:name=".MisAnunciosActivity">Mis Anuncios</activity>
-        <activity android:name=".DetalleAnuncio">Detalle Anuncio</activity>
+        <activity android:name=".activity.AcercaDe">Acerca De</activity>
+        <activity android:name=".activity.RegistroActivity">Registro</activity>
+        <activity android:name=".activity.InicioActivity">Login</activity>
+        <activity android:name=".activity.ProfileActivity">Perfil</activity>
+        <activity android:name=".activity.NuevoAnuncioActivity">Nuevo Anuncio</activity>
+        <activity android:name=".activity.MisAnunciosActivity">Mis Anuncios</activity>
+        <activity android:name=".activity.DetalleAnuncioActivity">Detalle Anuncio</activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.pedro.ofertapp;
+package com.example.pedro.ofertapp.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.pedro.ofertapp.R;
+import com.example.pedro.ofertapp.TextValidator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,81 +26,71 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 /**
- * Created by Pedro on 29/11/2016.
+ * Created by Pedro on 23/11/2016.
  */
-public class LoginActivity extends Activity {
+public class RegistroActivity extends Activity{
 
-    private TextView link_registro;
+    private Button registro;
+    private EditText etNombre;
+    private EditText etTelefono;
+    private EditText etEmail;
+    private EditText etDescripcion;
+
+    //private Context context;
 
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
 
-    private EditText etEmail;
-    private EditText etPassword;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.registro);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-
-        setContentView(R.layout.login);
-
-        link_registro = (TextView)findViewById(R.id.link_registro);
-        link_registro.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                Intent i = new Intent(LoginActivity.this, RegistroActivity.class);
-                startActivity(i);
+        //Recogemos las referencias
+        etNombre = (EditText)findViewById(R.id.registro_nombre);
+        etNombre.addTextChangedListener(new TextValidator(etNombre) {
+            @Override
+            public void validate(EditText editText, String text) {
+                if(text.equals(""))
+                    etNombre.setError("El nombre es obligatorio");
             }
         });
 
-        etEmail = (EditText)findViewById(R.id.login_user);
-        etPassword = (EditText)findViewById(R.id.login_pass);
+        etTelefono = (EditText)findViewById(R.id.registro_telefono);
+
+        etEmail = (EditText)findViewById(R.id.registro_email);
+        etEmail.addTextChangedListener(new TextValidator(etEmail) {
+            @Override
+            public void validate(EditText editText, String text) {
+                if(text.equals(""))
+                    etEmail.setError("El email es obligatorio");
+            }
+        });
+
+        etDescripcion = (EditText)findViewById(R.id.registro_descripcion);
     }
 
-    public void lanzarRegistro(View view) {
-        Intent i = new Intent(this, RegistroActivity.class);
-        startActivity(i);
-    }
+    public void registro(View view) {
 
-    public void login(View view) {
-
+        String nombre = etNombre.getText().toString();
+        String telf = etTelefono.getText().toString();
         String email = etEmail.getText().toString();
-        String pass = etPassword.getText().toString();
+        String desc = etDescripcion.getText().toString();
 
-        new AsyncLogin().execute(email, pass);
-
-        //Client client = ClientBuilder.newClient();
-        //WebTarget t = client.target("http://aosgc-board.herokuapp.com/board/message");
-        /*Client c = ClientBuilder.newClient()
-                .target("http://aosgc-board.herokuapp.com/board/message")
-                .path("path")
-                .queryParam().request().get();*/
-        //WebTarget t = c.target("http://aosgc-board.herokuapp.com/board/message");
-
-        //String s = t.request().accept(MediaType.APPLICATION_JSON_TYPE).get(Response.class).toString();
-        //System.out.println(s);
+        new AsyncRegistro().execute(nombre, telf, email, desc);
     }
 
-    private class AsyncLogin extends AsyncTask<String, String, String> {
+    private class AsyncRegistro extends AsyncTask<String, String, String> {
 
-        ProgressDialog pdLoading = new ProgressDialog(LoginActivity.this);
+        ProgressDialog pdLoading = new ProgressDialog(RegistroActivity.this);
         HttpURLConnection conn;
         URL url = null;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pdLoading.setMessage("Comprobando...");
+            pdLoading.setMessage("Cargando...");
             pdLoading.setCancelable(false);
             pdLoading.show();
         }
@@ -109,7 +99,7 @@ public class LoginActivity extends Activity {
         protected String doInBackground(String... params) {
 
             try {
-                url = new URL("http://10.0.2.2:80/api/v1/login");
+                url = new URL("http://10.0.2.2:80/api/v1/registro");
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -128,8 +118,10 @@ public class LoginActivity extends Activity {
 
                 //Agregamos parametros a la URL
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("email", params[0])
-                        .appendQueryParameter("password", params[1]);
+                        .appendQueryParameter("nombre", params[0])
+                        .appendQueryParameter("telefono", params[1])
+                        .appendQueryParameter("email", params[2])
+                        .appendQueryParameter("descripcion", params[3]);
 
                 String query = builder.build().getEncodedQuery();
 
@@ -152,6 +144,7 @@ public class LoginActivity extends Activity {
             try {
 
                 int response_code = conn.getResponseCode();
+
                 if (response_code == HttpURLConnection.HTTP_OK) {
 
                     //Leemos lo que nos devuelve el servidor
@@ -159,6 +152,7 @@ public class LoginActivity extends Activity {
                     String result = convertStreamToString(input);
                     input.close();
 
+                    //Pasamos a onPostExecute
                     return result.toString();
 
                 } else {
@@ -176,36 +170,24 @@ public class LoginActivity extends Activity {
             super.onPostExecute(result);
             pdLoading.dismiss();
 
+            String message;
             Integer code;
-            Integer id;
-            String name, email, telefono, pass, descripcion;
 
             try {
 
                 JSONObject obj = new JSONObject(result);
                 code = obj.getInt("code");
 
-                if(code.equals(200)) {
-
-                    id = obj.getInt("user_id");
-                    name = obj.getString("user_nombre");
-                    email = obj.getString("user_email");
-                    telefono = obj.getString("user_telefono");
-                    pass = obj.getString("user_pass");
-                    descripcion = obj.getString("user_desc");
-
-                    User user= new User(id, name, email, telefono, descripcion, pass);
-                    Toast.makeText(LoginActivity.this, R.string.mensaje_ok_login, Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
-                    i.putExtra("user", user);
+                if(code.equals(201)) {
+                    Toast.makeText(RegistroActivity.this, R.string.mensaje_ok_registro, Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(i);
 
                 } else if(code.equals(400)) {
-
-                    Toast.makeText(LoginActivity.this, R.string.mensaje_error_login_user, Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegistroActivity.this, R.string.mensaje_fail_registro, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(LoginActivity.this, R.string.mensaje_error_login, Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegistroActivity.this, R.string.mensaje_error_registro, Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

@@ -1,5 +1,7 @@
 package com.example.pedro.ofertapp;
 
+import com.example.pedro.ofertapp.model.Anuncio;
+
 import java.util.ArrayList;
 import java.util.List;
 

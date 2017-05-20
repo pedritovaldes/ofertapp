@@ -1,4 +1,4 @@
-package com.example.pedro.ofertapp;
+package com.example.pedro.ofertapp.model;
 
 /**
  * Created by Pedro on 01/05/2017.

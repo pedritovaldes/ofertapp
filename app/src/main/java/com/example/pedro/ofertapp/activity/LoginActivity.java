@@ -1,4 +1,4 @@
-package com.example.pedro.ofertapp;
+package com.example.pedro.ofertapp.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -7,10 +7,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.pedro.ofertapp.R;
+import com.example.pedro.ofertapp.model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,78 +29,74 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Created by Pedro on 09/01/2017.
+ * Created by Pedro on 29/11/2016.
  */
-public class NuevoAnuncioActivity extends Activity {
+public class LoginActivity extends Activity {
 
-    private User usuario_loggeado;
-
-    private Spinner spinner_sectores;
-    private Spinner spinner_provincias;
-
-    private String[] sectores = {"Seleccionar","Agricultura", "Minería", "Siderurgia", "Ganadería", "Pesca", "Construcción", "Industrías de procesado", "Fabricación",
-    "Hostelería", "Mantenimiento", "Sanitario", "Transporte", "Investigación", "Administraciones", "Ingenieros"};
-
-    private String[] provincias = {"Seleccionar", "Álava", "Albaecete","Alicante", "Almería"};
-
-    private EditText tituloAnuncio;
-    private Spinner sectorProfesional;
-    private Spinner selectedProvincia;
-    private EditText precio_max;
-    private EditText descripcion;
+    private TextView link_registro;
 
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
 
+    private EditText etEmail;
+    private EditText etPassword;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.nuevo_anuncio);
 
-        this.usuario_loggeado = (User)getIntent().getExtras().getSerializable("user");
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sectores);
-        spinner_sectores = (Spinner)findViewById(R.id.nuevo_anuncio_sector);
-        spinner_sectores.setAdapter(adapter);
 
-        ArrayAdapter provincia = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, provincias);
-        spinner_provincias = (Spinner)findViewById(R.id.nuevo_anuncio_provincia);
-        spinner_provincias.setAdapter(provincia);
+        setContentView(R.layout.login);
 
-        tituloAnuncio = (EditText)findViewById(R.id.nuevo_anuncio_titulo);
-        sectorProfesional = (Spinner)findViewById(R.id.nuevo_anuncio_sector);
-        selectedProvincia = (Spinner)findViewById(R.id.nuevo_anuncio_provincia);
-        precio_max = (EditText)findViewById(R.id.nuevo_anuncio_precio_servicio);
-        descripcion = (EditText)findViewById(R.id.nuevo_anuncio_texto);
+        link_registro = (TextView)findViewById(R.id.link_registro);
+        link_registro.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent i = new Intent(LoginActivity.this, RegistroActivity.class);
+                startActivity(i);
+            }
+        });
 
-        //usuario_loggeado = (User)getIntent().getExtras().getSerializable("user");
-
-        //prueba = (EditText)findViewById(R.id.nuevo_anuncio_titulo);
-        //prueba.setText(usuario_loggeado.getNombre());
+        etEmail = (EditText)findViewById(R.id.login_user);
+        etPassword = (EditText)findViewById(R.id.login_pass);
     }
 
-    public void nuevoAnuncio(View view) {
-
-        String titulo = tituloAnuncio.getText().toString();
-        String sectorProfesionalText = sectorProfesional.getSelectedItem().toString();
-        String provinciaSeleccionadaText = selectedProvincia.getSelectedItem().toString();
-        //Integer precio = Integer.parseInt(precio_max.getText().toString());
-        String precio = precio_max.getText().toString();
-        String textoDescripcion = descripcion.getText().toString();
-
-        new AsyncNuevoAnuncio().execute(titulo, sectorProfesionalText, provinciaSeleccionadaText, precio, textoDescripcion);
+    public void lanzarRegistro(View view) {
+        Intent i = new Intent(this, RegistroActivity.class);
+        startActivity(i);
     }
 
-    private class AsyncNuevoAnuncio extends AsyncTask<String, String, String> {
+    public void login(View view) {
 
-        ProgressDialog pdLoading = new ProgressDialog(NuevoAnuncioActivity.this);
+        String email = etEmail.getText().toString();
+        String pass = etPassword.getText().toString();
+
+        new AsyncLogin().execute(email, pass);
+
+        //Client client = ClientBuilder.newClient();
+        //WebTarget t = client.target("http://aosgc-board.herokuapp.com/board/message");
+        /*Client c = ClientBuilder.newClient()
+                .target("http://aosgc-board.herokuapp.com/board/message")
+                .path("path")
+                .queryParam().request().get();*/
+        //WebTarget t = c.target("http://aosgc-board.herokuapp.com/board/message");
+
+        //String s = t.request().accept(MediaType.APPLICATION_JSON_TYPE).get(Response.class).toString();
+        //System.out.println(s);
+    }
+
+    private class AsyncLogin extends AsyncTask<String, String, String> {
+
+        ProgressDialog pdLoading = new ProgressDialog(LoginActivity.this);
         HttpURLConnection conn;
         URL url = null;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pdLoading.setMessage("Enviando...");
+            pdLoading.setMessage("Comprobando...");
             pdLoading.setCancelable(false);
             pdLoading.show();
         }
@@ -105,7 +105,7 @@ public class NuevoAnuncioActivity extends Activity {
         protected String doInBackground(String... params) {
 
             try {
-                url = new URL("http://10.0.2.2:80/api/v1/anuncio");
+                url = new URL("http://10.0.2.2:80/api/v1/login");
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -124,12 +124,8 @@ public class NuevoAnuncioActivity extends Activity {
 
                 //Agregamos parametros a la URL
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("titulo", params[0])
-                        .appendQueryParameter("sector_profesional", params[1])
-                        .appendQueryParameter("provincia", params[2])
-                        .appendQueryParameter("precio_maximo", params[3])
-                        .appendQueryParameter("descripcion", params[4])
-                        .appendQueryParameter("user_id", usuario_loggeado.getId().toString());
+                        .appendQueryParameter("email", params[0])
+                        .appendQueryParameter("password", params[1]);
 
                 String query = builder.build().getEncodedQuery();
 
@@ -152,7 +148,6 @@ public class NuevoAnuncioActivity extends Activity {
             try {
 
                 int response_code = conn.getResponseCode();
-
                 if (response_code == HttpURLConnection.HTTP_OK) {
 
                     //Leemos lo que nos devuelve el servidor
@@ -160,7 +155,6 @@ public class NuevoAnuncioActivity extends Activity {
                     String result = convertStreamToString(input);
                     input.close();
 
-                    //Pasamos a onPostExecute
                     return result.toString();
 
                 } else {
@@ -178,24 +172,38 @@ public class NuevoAnuncioActivity extends Activity {
             super.onPostExecute(result);
             pdLoading.dismiss();
 
-            String message;
             Integer code;
+            Integer id;
+            String name, email, telefono, pass, descripcion;
 
             try {
 
                 JSONObject obj = new JSONObject(result);
                 code = obj.getInt("code");
 
-                if(code.equals(201)) {
-                    Toast.makeText(NuevoAnuncioActivity.this, R.string.mensaje_ok_nuevo_anuncio, Toast.LENGTH_LONG).show();
+                if(code.equals(200)) {
+
+                    id = obj.getInt("user_id");
+                    name = obj.getString("user_nombre");
+                    email = obj.getString("user_email");
+                    telefono = obj.getString("user_telefono");
+                    pass = obj.getString("user_pass");
+                    descripcion = obj.getString("user_desc");
+
+                    User user= new User(id, name, email, telefono, descripcion, pass);
+                    Toast.makeText(LoginActivity.this, R.string.mensaje_ok_login, Toast.LENGTH_LONG).show();
                     Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
-                    i.putExtra("user", usuario_loggeado);
+                    i.putExtra("user", user);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(i);
 
                 } else if(code.equals(400)) {
-                    Toast.makeText(NuevoAnuncioActivity.this, R.string.mensaje_fail_nuevo_anuncio, Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(LoginActivity.this, R.string.mensaje_error_login_user, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, R.string.mensaje_error_login, Toast.LENGTH_LONG).show();
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

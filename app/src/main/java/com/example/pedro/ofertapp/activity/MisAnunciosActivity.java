@@ -1,18 +1,20 @@
-package com.example.pedro.ofertapp;
+package com.example.pedro.ofertapp.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
+import com.example.pedro.ofertapp.LoadJSONTask;
+import com.example.pedro.ofertapp.R;
+import com.example.pedro.ofertapp.model.Anuncio;
+import com.example.pedro.ofertapp.model.User;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -77,7 +79,7 @@ public class MisAnunciosActivity extends Activity implements LoadJSONTask.Listen
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
         //Toast.makeText(this, mAndroidMapList.get(i).get(KEY_TITULO),Toast.LENGTH_LONG).show();
-        Intent detalleIntent = new Intent(this, DetalleAnuncio.class);
+        Intent detalleIntent = new Intent(this, DetalleAnuncioActivity.class);
         detalleIntent.putExtra("userLogged", usuario_loggeado);
         detalleIntent.putExtra("idAnuncio",mAndroidMapList.get(i).get(KEY_ID));
         detalleIntent.putExtra("tituloAnuncio", mAndroidMapList.get(i).get(KEY_TITULO));

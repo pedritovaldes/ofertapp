@@ -1,50 +1,52 @@
-package com.example.pedro.ofertapp;
+package com.example.pedro.ofertapp.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.pedro.ofertapp.R;
+import com.example.pedro.ofertapp.model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.BufferedReader;
+
 import java.io.BufferedWriter;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import cz.msebera.android.httpclient.HttpResponse;
-import cz.msebera.android.httpclient.client.HttpClient;
-import cz.msebera.android.httpclient.client.methods.HttpPost;
-import cz.msebera.android.httpclient.entity.StringEntity;
-import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
-import cz.msebera.android.httpclient.util.EntityUtils;
-
 /**
- * Created by Pedro on 23/11/2016.
+ * Created by Pedro on 09/01/2017.
  */
-public class RegistroActivity extends Activity{
+public class NuevoAnuncioActivity extends Activity {
 
-    private Button registro;
-    private EditText etNombre;
-    private EditText etTelefono;
-    private EditText etEmail;
-    private EditText etDescripcion;
+    private User usuario_loggeado;
 
-    //private Context context;
+    private Spinner spinner_sectores;
+    private Spinner spinner_provincias;
+
+    private String[] sectores = {"Seleccionar","Agricultura", "Minería", "Siderurgia", "Ganadería", "Pesca", "Construcción", "Industrías de procesado", "Fabricación",
+    "Hostelería", "Mantenimiento", "Sanitario", "Transporte", "Investigación", "Administraciones", "Ingenieros"};
+
+    private String[] provincias = {"Seleccionar", "Álava", "Albaecete","Alicante", "Almería"};
+
+    private EditText tituloAnuncio;
+    private Spinner sectorProfesional;
+    private Spinner selectedProvincia;
+    private EditText precio_max;
+    private EditText descripcion;
 
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
@@ -52,52 +54,52 @@ public class RegistroActivity extends Activity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.registro);
+        setContentView(R.layout.nuevo_anuncio);
 
-        //Recogemos las referencias
-        etNombre = (EditText)findViewById(R.id.registro_nombre);
-        etNombre.addTextChangedListener(new TextValidator(etNombre) {
-            @Override
-            public void validate(EditText editText, String text) {
-                if(text.equals(""))
-                    etNombre.setError("El nombre es obligatorio");
-            }
-        });
+        this.usuario_loggeado = (User)getIntent().getExtras().getSerializable("user");
 
-        etTelefono = (EditText)findViewById(R.id.registro_telefono);
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sectores);
+        spinner_sectores = (Spinner)findViewById(R.id.nuevo_anuncio_sector);
+        spinner_sectores.setAdapter(adapter);
 
-        etEmail = (EditText)findViewById(R.id.registro_email);
-        etEmail.addTextChangedListener(new TextValidator(etEmail) {
-            @Override
-            public void validate(EditText editText, String text) {
-                if(text.equals(""))
-                    etEmail.setError("El email es obligatorio");
-            }
-        });
+        ArrayAdapter provincia = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, provincias);
+        spinner_provincias = (Spinner)findViewById(R.id.nuevo_anuncio_provincia);
+        spinner_provincias.setAdapter(provincia);
 
-        etDescripcion = (EditText)findViewById(R.id.registro_descripcion);
+        tituloAnuncio = (EditText)findViewById(R.id.nuevo_anuncio_titulo);
+        sectorProfesional = (Spinner)findViewById(R.id.nuevo_anuncio_sector);
+        selectedProvincia = (Spinner)findViewById(R.id.nuevo_anuncio_provincia);
+        precio_max = (EditText)findViewById(R.id.nuevo_anuncio_precio_servicio);
+        descripcion = (EditText)findViewById(R.id.nuevo_anuncio_texto);
+
+        //usuario_loggeado = (User)getIntent().getExtras().getSerializable("user");
+
+        //prueba = (EditText)findViewById(R.id.nuevo_anuncio_titulo);
+        //prueba.setText(usuario_loggeado.getNombre());
     }
 
-    public void registro(View view) {
+    public void nuevoAnuncio(View view) {
 
-        String nombre = etNombre.getText().toString();
-        String telf = etTelefono.getText().toString();
-        String email = etEmail.getText().toString();
-        String desc = etDescripcion.getText().toString();
+        String titulo = tituloAnuncio.getText().toString();
+        String sectorProfesionalText = sectorProfesional.getSelectedItem().toString();
+        String provinciaSeleccionadaText = selectedProvincia.getSelectedItem().toString();
+        //Integer precio = Integer.parseInt(precio_max.getText().toString());
+        String precio = precio_max.getText().toString();
+        String textoDescripcion = descripcion.getText().toString();
 
-        new AsyncRegistro().execute(nombre, telf, email, desc);
+        new AsyncNuevoAnuncio().execute(titulo, sectorProfesionalText, provinciaSeleccionadaText, precio, textoDescripcion);
     }
 
-    private class AsyncRegistro extends AsyncTask<String, String, String> {
+    private class AsyncNuevoAnuncio extends AsyncTask<String, String, String> {
 
-        ProgressDialog pdLoading = new ProgressDialog(RegistroActivity.this);
+        ProgressDialog pdLoading = new ProgressDialog(NuevoAnuncioActivity.this);
         HttpURLConnection conn;
         URL url = null;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pdLoading.setMessage("Cargando...");
+            pdLoading.setMessage("Enviando...");
             pdLoading.setCancelable(false);
             pdLoading.show();
         }
@@ -106,7 +108,7 @@ public class RegistroActivity extends Activity{
         protected String doInBackground(String... params) {
 
             try {
-                url = new URL("http://10.0.2.2:80/api/v1/registro");
+                url = new URL("http://10.0.2.2:80/api/v1/anuncio");
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -125,10 +127,12 @@ public class RegistroActivity extends Activity{
 
                 //Agregamos parametros a la URL
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("nombre", params[0])
-                        .appendQueryParameter("telefono", params[1])
-                        .appendQueryParameter("email", params[2])
-                        .appendQueryParameter("descripcion", params[3]);
+                        .appendQueryParameter("titulo", params[0])
+                        .appendQueryParameter("sector_profesional", params[1])
+                        .appendQueryParameter("provincia", params[2])
+                        .appendQueryParameter("precio_maximo", params[3])
+                        .appendQueryParameter("descripcion", params[4])
+                        .appendQueryParameter("user_id", usuario_loggeado.getId().toString());
 
                 String query = builder.build().getEncodedQuery();
 
@@ -186,17 +190,15 @@ public class RegistroActivity extends Activity{
                 code = obj.getInt("code");
 
                 if(code.equals(201)) {
-                    Toast.makeText(RegistroActivity.this, R.string.mensaje_ok_registro, Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                    Toast.makeText(NuevoAnuncioActivity.this, R.string.mensaje_ok_nuevo_anuncio, Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                    i.putExtra("user", usuario_loggeado);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(i);
 
                 } else if(code.equals(400)) {
-                    Toast.makeText(RegistroActivity.this, R.string.mensaje_fail_registro, Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(RegistroActivity.this, R.string.mensaje_error_registro, Toast.LENGTH_LONG).show();
+                    Toast.makeText(NuevoAnuncioActivity.this, R.string.mensaje_fail_nuevo_anuncio, Toast.LENGTH_LONG).show();
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

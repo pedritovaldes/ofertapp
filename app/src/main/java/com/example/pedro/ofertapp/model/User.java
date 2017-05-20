@@ -1,4 +1,4 @@
-package com.example.pedro.ofertapp;
+package com.example.pedro.ofertapp.model;
 
 import java.io.Serializable;
 

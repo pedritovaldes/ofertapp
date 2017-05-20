@@ -1,4 +1,4 @@
-package com.example.pedro.ofertapp;
+package com.example.pedro.ofertapp.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,14 +11,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pedro.ofertapp.R;
+import com.example.pedro.ofertapp.model.User;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -32,7 +33,7 @@ import java.net.URL;
 /**
  * Created by Pedro on 06/05/2017.
  */
-public class DetalleAnuncio extends Activity {
+public class DetalleAnuncioActivity extends Activity {
 
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
@@ -81,6 +82,14 @@ public class DetalleAnuncio extends Activity {
                 confirmDelete();
             }
         });
+
+        modificarDatos = (Button)findViewById(R.id.buttonModificarDatos);
+        modificarDatos.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                confirmModify();
+            }
+        });
     }
 
     private void setAnuncio(Bundle bundle) {
@@ -116,18 +125,42 @@ public class DetalleAnuncio extends Activity {
 
     private void confirmDelete() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(DetalleAnuncio.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(DetalleAnuncioActivity.this);
 
         builder.setMessage(R.string.deleteMessage)
-                .setTitle(R.string.deleteConfirmTitle)
-                .setPositiveButton(R.string.deleteOptionYes,
+                .setTitle(R.string.confirmTitle)
+                .setPositiveButton(R.string.optionYes,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 deleteAnuncio(idAnuncio);
                             }
                         })
-                .setNegativeButton(R.string.deleteOptionCancel,
+                .setNegativeButton(R.string.optionCancel,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void confirmModify() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(DetalleAnuncioActivity.this);
+
+        builder.setMessage(R.string.modifyMessage)
+                .setTitle(R.string.confirmTitle)
+                .setPositiveButton(R.string.optionYes,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //deleteAnuncio(idAnuncio);
+                            }
+                        })
+                .setNegativeButton(R.string.optionCancel,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -145,7 +178,7 @@ public class DetalleAnuncio extends Activity {
 
     private class AsyncLogin extends AsyncTask<Integer, String, String> {
 
-        ProgressDialog pdLoading = new ProgressDialog(DetalleAnuncio.this);
+        ProgressDialog pdLoading = new ProgressDialog(DetalleAnuncioActivity.this);
         HttpURLConnection conn;
         URL url = null;
 
@@ -229,14 +262,14 @@ public class DetalleAnuncio extends Activity {
 
                 if(code.equals(200)) {
 
-                    Toast.makeText(DetalleAnuncio.this, R.string.mensaje_ok_delete_anuncio, Toast.LENGTH_LONG).show();
+                    Toast.makeText(DetalleAnuncioActivity.this, R.string.mensaje_ok_delete_anuncio, Toast.LENGTH_LONG).show();
                     Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
                     i.putExtra("user", usuario_loggeado);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(i);
 
                 } else {
-                    Toast.makeText(DetalleAnuncio.this, R.string.mensaje_error_delete_anuncio, Toast.LENGTH_LONG).show();
+                    Toast.makeText(DetalleAnuncioActivity.this, R.string.mensaje_error_delete_anuncio, Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {

@@ -1,9 +1,11 @@
-package com.example.pedro.ofertapp;
+package com.example.pedro.ofertapp.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.pedro.ofertapp.R;
 
 public class InicioActivity extends AppCompatActivity {
 

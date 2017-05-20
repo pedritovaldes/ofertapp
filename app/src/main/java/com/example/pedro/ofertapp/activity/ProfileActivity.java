@@ -1,4 +1,4 @@
-package com.example.pedro.ofertapp;
+package com.example.pedro.ofertapp.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.pedro.ofertapp.R;
+import com.example.pedro.ofertapp.model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
