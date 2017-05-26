@@ -36,7 +36,7 @@ android:theme="@android:style/Theme.NoTitleBar">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="@string/editar_perfil"
-    android:id="@+id/button_editar_perfil"
+    android:id="@+id/mi_perfil"
     android:gravity="center" />
 
 <Button

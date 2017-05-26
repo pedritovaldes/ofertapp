@@ -38,6 +38,7 @@ public class ProfileActivity extends Activity {
     private Button button_eliminar_perfil;
     private Button button_nuevo_anuncio;
     private Button button_mis_anuncios;
+    private Button button_mi_perfil;
 
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
@@ -75,6 +76,20 @@ public class ProfileActivity extends Activity {
                 lanzarMisAnuncios(usuario_loggeado);
             }
         });
+
+        button_mi_perfil = (Button)findViewById(R.id.mi_perfil);
+        button_mi_perfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lanzarMiPerfil(usuario_loggeado);
+            }
+        });
+    }
+
+    public void lanzarMiPerfil(User user) {
+        Intent i = new Intent(this, EditarPerfilActivity.class);
+        i.putExtra("user", user);
+        startActivity(i);
     }
 
     public void lanzarNuevoAnuncio(User user) {

@@ -56,4 +56,7 @@
     <string name="modifyMessage">¿Desea modificar el anuncio?</string>
     <string name="mensaje_accion_ok">Acción completada</string>
     <string name="mensaje_accion_error">Ha ocurrido algún problema</string>
+
+
+    <!--Editar perfil usuario -->
 </resources>
