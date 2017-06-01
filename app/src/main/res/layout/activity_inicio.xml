@@ -15,13 +15,14 @@
         android:layout_height="wrap_content"
         android:text="OfertAPP"
         android:gravity="center"
-        android:textSize="25sp"
-        android:layout_marginBottom="20dp"/>
+        android:textSize="40sp"
+        android:layout_marginBottom="20dp"
+        android:textColor="#030303" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Login"
+        android:text="@string/inicioLogin"
         android:id="@+id/button_loggin"
         android:onClick="lanzarLogin"
         android:gravity="center" />
@@ -34,12 +35,22 @@
         android:onClick="lanzarRegistro"
         android:gravity="center" />
 
-    <Button
+    <!--<Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/Acercade"
         android:id="@+id/button_acercaDe"
         android:onClick="lanzarAcercaDe"
-        android:gravity="center" />
+        android:gravity="center" />-->
+
+    <TextView android:id="@+id/link_mirar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="Voy a mirar"
+        android:gravity="center"
+        android:textSize="16dip"
+        android:paddingTop="25dp"
+        android:textColor="#030303"/>
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -31,7 +32,7 @@ import java.net.URL;
 /**
  * Created by Pedro on 29/11/2016.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity{
 
     private TextView link_registro;
 

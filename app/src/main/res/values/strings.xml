@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">OfertAPP</string>
     <string name="Login">Login</string>
+    <string name="inicioLogin">Ya estoy registrado</string>
     <string name="Registro">Registro</string>
     <!--Acerca De-->
     <string name="Acercade">Acerca de</string>

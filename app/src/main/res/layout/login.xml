@@ -19,7 +19,7 @@
         android:gravity="center"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="220dp"
         android:id="@+id/lnrlyout">
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,10 +78,6 @@
                     android:textColor="#fff"
                     />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#5fff"></LinearLayout>
 
             <Button
                 android:layout_width="match_parent"
@@ -98,8 +94,8 @@
             <TextView android:id="@+id/link_registro"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:text="No estas registrado?"
+                android:layout_marginBottom="12dp"
+                android:text="¿No estas registrado?"
                 android:gravity="center"
                 android:textSize="16dip"
                 android:paddingTop="25dp" />
