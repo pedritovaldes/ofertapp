@@ -25,7 +25,8 @@
         android:text="@string/inicioLogin"
         android:id="@+id/button_loggin"
         android:onClick="lanzarLogin"
-        android:gravity="center" />
+        android:gravity="center"
+        android:theme="@style/MyButton"/>
 
     <Button
         android:layout_width="match_parent"
@@ -33,7 +34,8 @@
         android:text="@string/Registro"
         android:id="@+id/button_registro"
         android:onClick="lanzarRegistro"
-        android:gravity="center" />
+        android:gravity="center"
+        android:theme="@style/MyButton"/>
 
     <!--<Button
         android:layout_width="match_parent"
