@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -32,7 +34,7 @@ import java.net.URL;
 /**
  * Created by Pedro on 06/05/2017.
  */
-public class DetalleAnuncioActivity extends Activity {
+public class DetalleAnuncioActivity extends AppCompatActivity {
 
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
@@ -92,6 +94,20 @@ public class DetalleAnuncioActivity extends Activity {
                 confirmModify();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                Intent intent= new Intent();
+                intent.putExtra("user", usuario_loggeado);
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setAnuncio(Bundle bundle) {

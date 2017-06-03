@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -30,7 +32,7 @@ import java.net.URL;
 /**
  * Created by Pedro on 09/01/2017.
  */
-public class NuevoAnuncioActivity extends Activity {
+public class NuevoAnuncioActivity extends AppCompatActivity {
 
     private User usuario_loggeado;
 
@@ -76,6 +78,20 @@ public class NuevoAnuncioActivity extends Activity {
 
         //prueba = (EditText)findViewById(R.id.nuevo_anuncio_titulo);
         //prueba.setText(usuario_loggeado.getNombre());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                Intent intent= new Intent();
+                intent.putExtra("user", usuario_loggeado);
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void nuevoAnuncio(View view) {

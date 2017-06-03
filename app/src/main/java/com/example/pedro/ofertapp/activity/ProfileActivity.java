@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ import java.net.URL;
 /**
  * Created by Pedro on 19/12/2016.
  */
-public class ProfileActivity extends Activity {
+public class ProfileActivity extends AppCompatActivity {
 
     private TextView mensaje_inicio;
     private User usuario_loggeado;
@@ -95,7 +96,17 @@ public class ProfileActivity extends Activity {
     public void lanzarNuevoAnuncio(User user) {
         Intent i = new Intent(this, NuevoAnuncioActivity.class);
         i.putExtra("user",user);
-        startActivity(i);
+        startActivityForResult(i,2404);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == 2404) {
+            if(data != null) {
+                usuario_loggeado = (User)data.getExtras().getSerializable("user");
+            }
+        }
     }
 
     public void lanzarMisAnuncios(User user) {

@@ -25,7 +25,12 @@
         </activity>
 
         <activity android:name=".activity.AcercaDe">Acerca De</activity>
-        <activity android:name=".activity.RegistroActivity">Registro</activity>
+
+        <activity
+            android:name=".activity.RegistroActivity"
+            android:parentActivityName=".activity.InicioActivity">
+        </activity>
+
         <activity android:name=".activity.ProfileActivity">Perfil</activity>
 
         <activity
@@ -34,9 +39,21 @@
             android:launchMode="singleTop">
         </activity>
 
-        <activity android:name=".activity.MisAnunciosActivity">Mis Anuncios</activity>
-        <activity android:name=".activity.DetalleAnuncioActivity">Detalle Anuncio</activity>
-        <activity android:name=".activity.EditarPerfilActivity">Editar Perfil</activity>
+        <activity
+            android:name=".activity.MisAnunciosActivity"
+            android:parentActivityName=".activity.ProfileActivity">
+        </activity>
+
+        <activity
+            android:name=".activity.DetalleAnuncioActivity"
+            android:parentActivityName=".activity.ProfileActivity">
+        </activity>
+
+        <activity
+            android:name=".activity.EditarPerfilActivity"
+            android:parentActivityName=".activity.ProfileActivity">
+        </activity>
+
     </application>
 
 </manifest>

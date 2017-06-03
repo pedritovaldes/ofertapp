@@ -3,6 +3,8 @@ package com.example.pedro.ofertapp.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -22,7 +24,7 @@ import java.util.List;
 /**
  * Created by Pedro on 30/04/2017.
  */
-public class MisAnunciosActivity extends Activity implements LoadJSONTask.Listener, AdapterView.OnItemClickListener {
+public class MisAnunciosActivity extends AppCompatActivity implements LoadJSONTask.Listener, AdapterView.OnItemClickListener {
 
     private ListView mListView;
     private User usuario_loggeado;
@@ -48,6 +50,30 @@ public class MisAnunciosActivity extends Activity implements LoadJSONTask.Listen
         mListView = (ListView) findViewById(R.id.list_view);
         mListView.setOnItemClickListener(this);
         new LoadJSONTask(this).execute(URL);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == 2404) {
+            if(data != null) {
+                usuario_loggeado = (User)data.getExtras().getSerializable("user");
+            }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                Intent intent= new Intent();
+                intent.putExtra("user", usuario_loggeado);
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
