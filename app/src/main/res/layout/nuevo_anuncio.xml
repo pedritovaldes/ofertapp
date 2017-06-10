@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,16 +18,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="16dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nuevoAnuncioTitulo"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/activity_horizontal_margin"
+                    android:layout_gravity="center"/>
                 <EditText
                     android:id="@+id/nuevo_anuncio_titulo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Titulo"
+                    android:layout_height="match_parent"
                     android:textColorHint="#fff"
                     android:layout_marginLeft="15dp"
                     android:background="#00000000"
@@ -45,8 +52,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="16dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nuevoAnuncioSector"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/activity_horizontal_margin"
+                    android:layout_gravity="center"/>
                 <Spinner
                     android:id="@+id/nuevo_anuncio_sector"
                     android:layout_width="match_parent"
@@ -69,8 +83,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="16dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nuevoAnuncioProvincia"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/activity_horizontal_margin"
+                    android:layout_gravity="center"/>
                 <Spinner
                     android:id="@+id/nuevo_anuncio_provincia"
                     android:layout_width="match_parent"
@@ -93,13 +114,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="16dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nuevoAnuncioPrecio"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/activity_horizontal_margin"
+                    android:layout_gravity="center"/>
                 <EditText
                     android:id="@+id/nuevo_anuncio_precio_servicio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Precio max. (€)"
+                    android:hint="(€)"
                     android:textColorHint="#fff"
                     android:layout_marginLeft="15dp"
                     android:background="#00000000"
@@ -117,8 +145,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nuevoAnuncioDescripcion"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/activity_horizontal_margin"
+                    android:layout_gravity="center"/>
 
                 <EditText
                     android:id="@+id/nuevo_anuncio_texto"
@@ -129,7 +165,6 @@
                     android:lines="5"
                     android:layout_marginLeft="10dip"
                     android:layout_marginRight="10dip"
-                    android:hint="¿Algo que añadir?"
                     android:textColorHint="#fff" />
             </LinearLayout>
 
@@ -141,11 +176,11 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Enviar"
+                android:text="@string/anyadir_nuevo_anuncio_boton"
                 android:id="@+id/button_enviar_nuevo_anuncio"
                 android:onClick="nuevoAnuncio" />
 
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+</ScrollView>

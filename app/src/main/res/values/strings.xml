@@ -37,6 +37,12 @@
     <!--Nuevo anuncio-->
     <string name="mensaje_ok_nuevo_anuncio">Anuncio creado correctamente</string>
     <string name="mensaje_fail_nuevo_anuncio">Error al crear el anuncio</string>
+    <string name="anyadir_nuevo_anuncio_boton">Añadir anuncio</string>
+    <string name="nuevoAnuncioTitulo">Añade un título</string>
+    <string name="nuevoAnuncioProvincia">Selecciona una provincia</string>
+    <string name="nuevoAnuncioSector">Selecciona un sector</string>
+    <string name="nuevoAnuncioPrecio">¿Precio máximo?</string>
+    <string name="nuevoAnuncioDescripcion">¿Algo que añadir?</string>
 
     <!--Detalle anuncio -->
     <string name="tituloDetalleAnuncio">Detalle Anuncio</string>

@@ -3,15 +3,18 @@ package com.example.pedro.ofertapp.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pedro.ofertapp.R;
@@ -60,25 +63,37 @@ public class NuevoAnuncioActivity extends AppCompatActivity {
 
         this.usuario_loggeado = (User)getIntent().getExtras().getSerializable("user");
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sectores);
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, sectores);
         spinner_sectores = (Spinner)findViewById(R.id.nuevo_anuncio_sector);
         spinner_sectores.setAdapter(adapter);
 
-        ArrayAdapter provincia = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, provincias);
+        ArrayAdapter provincia = new ArrayAdapter<String>(this, R.layout.spinner_item, provincias);
         spinner_provincias = (Spinner)findViewById(R.id.nuevo_anuncio_provincia);
         spinner_provincias.setAdapter(provincia);
+
+        setColorSpinner(spinner_sectores);
+        setColorSpinner(spinner_provincias);
 
         tituloAnuncio = (EditText)findViewById(R.id.nuevo_anuncio_titulo);
         sectorProfesional = (Spinner)findViewById(R.id.nuevo_anuncio_sector);
         selectedProvincia = (Spinner)findViewById(R.id.nuevo_anuncio_provincia);
         precio_max = (EditText)findViewById(R.id.nuevo_anuncio_precio_servicio);
         descripcion = (EditText)findViewById(R.id.nuevo_anuncio_texto);
-
-        //usuario_loggeado = (User)getIntent().getExtras().getSerializable("user");
-
-        //prueba = (EditText)findViewById(R.id.nuevo_anuncio_titulo);
-        //prueba.setText(usuario_loggeado.getNombre());
     }
+
+    private void setColorSpinner(Spinner spinner) {
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                ((TextView) parentView.getChildAt(0)).setTextColor(Color.WHITE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
