@@ -42,7 +42,7 @@
     <string name="tituloDetalleAnuncio">Detalle Anuncio</string>
     <string name="detalleTituloTexto">Título anuncio</string>
     <string name="detalleAnuncioBotonEliminar">Eliminar anuncio</string>
-    <string name="detalleAnuncioBotonModificar">Modificar</string>
+    <string name="detalleAnuncioBotonModificar">Guardar cambios</string>
     <string name="detalleSectorTexto">Sector profesional</string>
     <string name="detalleProvinciaTexto">Provincia</string>
     <string name="detallePrecio">Precio max</string>
