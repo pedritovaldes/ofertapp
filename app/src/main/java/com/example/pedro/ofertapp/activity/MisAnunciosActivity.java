@@ -29,7 +29,7 @@ public class MisAnunciosActivity extends AppCompatActivity implements LoadJSONTa
     private ListView mListView;
     private User usuario_loggeado;
 
-    public static final String URL = "http://10.0.2.2:80/api/v1/anuncio/6";
+    public static String URL = "http://10.0.2.2:80/api/v1/user/";
 
     private List<HashMap<String, String>> mAndroidMapList = new ArrayList<>();
 
@@ -49,6 +49,9 @@ public class MisAnunciosActivity extends AppCompatActivity implements LoadJSONTa
 
         mListView = (ListView) findViewById(R.id.list_view);
         mListView.setOnItemClickListener(this);
+
+        this.URL = URL + this.usuario_loggeado.getId() + "/anuncios";
+
         new LoadJSONTask(this).execute(URL);
     }
 
