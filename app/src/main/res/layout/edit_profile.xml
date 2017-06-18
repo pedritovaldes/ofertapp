@@ -126,7 +126,8 @@
                     android:lines="5"
                     android:layout_marginLeft="10dip"
                     android:layout_marginRight="10dip"
-                    android:textColorHint="#fff" />
+                    android:textColorHint="#fff"
+                    android:textColor="#fff"/>
             </LinearLayout>
 
             <LinearLayout
