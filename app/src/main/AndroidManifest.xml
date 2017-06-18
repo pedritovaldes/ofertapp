@@ -54,6 +54,11 @@
             android:parentActivityName=".activity.ProfileActivity">
         </activity>
 
+        <activity
+            android:name=".activity.BuscarAnuncioActivity"
+            android:parentActivityName=".activity.ProfileActivity">
+        </activity>
+
     </application>
 
 </manifest>

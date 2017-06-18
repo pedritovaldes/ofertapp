@@ -40,6 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Button button_nuevo_anuncio;
     private Button button_mis_anuncios;
     private Button button_mi_perfil;
+    private Button button_buscar;
 
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
@@ -53,6 +54,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         mensaje_inicio = (TextView)findViewById(R.id.mensaje_inicio);
         mensaje_inicio.setText("Hola " + usuario_loggeado.getNombre());
+
+        button_buscar = (Button) findViewById(R.id.button_buscar);
+        button_buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lanzarBuscarAnuncio(usuario_loggeado);
+            }
+        });
 
         button_eliminar_perfil=(Button) findViewById(R.id.eliminar_perfil);
         button_eliminar_perfil.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +94,12 @@ public class ProfileActivity extends AppCompatActivity {
                 lanzarMiPerfil(usuario_loggeado);
             }
         });
+    }
+
+    public void lanzarBuscarAnuncio(User user) {
+        Intent i = new Intent(this, BuscarAnuncioActivity.class);
+        i.putExtra("user", user);
+        startActivity(i);
     }
 
     public void lanzarMiPerfil(User user) {

@@ -65,5 +65,19 @@
     <string name="mensaje_accion_error">Ha ocurrido algún problema</string>
 
 
+    <!-- Buscar anuncio -->
+    <string name="tituloBuscarAnuncio">¿Buscas algo?</string>
+    <string name="buscarAnuncioSector">Selecciona un sector</string>
+    <string name="buscarAnuncioProvincia">Ahora una provincia</string>
+    <string name="buscarAnuncioPrecio">Introduce un precio máximo</string>
+    <string name="buscarAnuncioFecha">Y una fecha de publicación</string>
+    <string name="buscarAnuncio24Horas">Últimas 24 horas</string>
+    <string name="buscarAnuncio7Dias">Últimos 7 días</string>
+    <string name="buscarAnuncioMes">Último mes</string>
+    <string name="buscarAnuncioSinFecha">No tengo en cuenta la fecha</string>
+    <string name="buscar_anuncio_button">Voy a probar suerte</string>
+
+
+
     <!--Editar perfil usuario -->
 </resources>
