@@ -1,7 +1,9 @@
 package com.example.pedro.ofertapp.activity;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -9,10 +11,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.pedro.ofertapp.DatePickerFragment;
 import com.example.pedro.ofertapp.R;
 import com.example.pedro.ofertapp.model.User;
 
@@ -33,6 +37,7 @@ public class BuscarAnuncioActivity extends AppCompatActivity {
     private Spinner sectorProfesional, selectedProvincia;
     private CheckBox horas, dias, mes, noFecha;
     private EditText precio_max;
+    private String fechaSeleccionada;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -57,7 +62,7 @@ public class BuscarAnuncioActivity extends AppCompatActivity {
         sectorProfesional = (Spinner)findViewById(R.id.buscar_anuncio_sector);
         selectedProvincia = (Spinner)findViewById(R.id.buscar_anuncio_provincia);
         precio_max = (EditText)findViewById(R.id.buscar_anuncio_precio_servicio);
-        horas = (CheckBox)findViewById(R.id.checkBoxFecha24Horas);
+        /*horas = (CheckBox)findViewById(R.id.checkBoxFecha24Horas);
         dias = (CheckBox)findViewById(R.id.checkBoxFecha7Dias);
         mes = (CheckBox)findViewById(R.id.checkBoxFechaMes);
         noFecha = (CheckBox)findViewById(R.id.checkBoxFechaSinFecha);
@@ -88,10 +93,10 @@ public class BuscarAnuncioActivity extends AppCompatActivity {
             public void onClick(View v) {
                 onCheckboxClicked(v, horas, dias, mes, noFecha);
             }
-        });
+        });*/
     }
 
-    private void onCheckboxClicked(View v, CheckBox horas, CheckBox dias, CheckBox mes, CheckBox noFecha) {
+    /*private void onCheckboxClicked(View v, CheckBox horas, CheckBox dias, CheckBox mes, CheckBox noFecha) {
 
         switch (v.getId()) {
             case R.id.checkBoxFecha24Horas:
@@ -99,6 +104,7 @@ public class BuscarAnuncioActivity extends AppCompatActivity {
                     dias.setChecked(false);
                     mes.setChecked(false);
                     noFecha.setChecked(false);
+                    fechaSeleccionada = "horas";
                 }
                 break;
             case R.id.checkBoxFecha7Dias:
@@ -106,6 +112,7 @@ public class BuscarAnuncioActivity extends AppCompatActivity {
                     horas.setChecked(false);
                     mes.setChecked(false);
                     noFecha.setChecked(false);
+                    fechaSeleccionada = "dias";
                 }
                 break;
             case R.id.checkBoxFechaMes:
@@ -113,6 +120,7 @@ public class BuscarAnuncioActivity extends AppCompatActivity {
                     horas.setChecked(false);
                     dias.setChecked(false);
                     noFecha.setChecked(false);
+                    fechaSeleccionada = "mes";
                 }
                 break;
             case R.id.checkBoxFechaSinFecha:
@@ -120,6 +128,7 @@ public class BuscarAnuncioActivity extends AppCompatActivity {
                     horas.setChecked(false);
                     dias.setChecked(false);
                     mes.setChecked(false);
+                    fechaSeleccionada = "noFecha";
                 }
                 break;
             default:
@@ -127,7 +136,13 @@ public class BuscarAnuncioActivity extends AppCompatActivity {
                 dias.setChecked(true);
                 mes.setChecked(true);
                 noFecha.setChecked(true);
+                fechaSeleccionada = "noFecha";
         }
+    }*/
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     private void setColorSpinner(Spinner spinner) {

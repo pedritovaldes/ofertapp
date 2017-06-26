@@ -76,8 +76,7 @@
     <string name="buscarAnuncioMes">Último mes</string>
     <string name="buscarAnuncioSinFecha">No tengo en cuenta la fecha</string>
     <string name="buscar_anuncio_button">Voy a probar suerte</string>
-
-
+    <string name="botonMostrarFecha">Después del...</string>
 
     <!--Editar perfil usuario -->
 </resources>

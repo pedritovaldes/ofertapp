@@ -152,7 +152,20 @@
                     android:layout_marginTop="30dp"
                     android:orientation="vertical">
 
-                    <CheckBox
+                    <Button
+                        android:id="@+id/picDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/botonMostrarFecha"
+                        android:onClick="showDatePickerDialog"/>
+                    <TextView
+                        android:layout_below="@+id/picDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/showDate"
+                        android:textSize="18dp"/>
+
+                    <!--<CheckBox
                         android:id="@+id/checkBoxFecha24Horas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -198,7 +211,7 @@
                         android:text="@string/buscarAnuncioSinFecha"
                         android:textColor="#000000"
                         android:textSize="@dimen/activity_horizontal_margin"
-                        android:textStyle="bold|italic" />
+                        android:textStyle="bold|italic" />-->
 
                     </LinearLayout>
 
