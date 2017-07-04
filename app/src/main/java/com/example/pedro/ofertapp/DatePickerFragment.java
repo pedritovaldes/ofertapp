@@ -32,6 +32,5 @@ public class DatePickerFragment extends DialogFragment  implements DatePickerDia
         // Do something with the date chosen by the user
         TextView tv1= (TextView) getActivity().findViewById(R.id.showDate);
         tv1.setText("Año: "+view.getYear()+" Mes: "+view.getMonth()+" Dia: "+view.getDayOfMonth());
-
     }
 }

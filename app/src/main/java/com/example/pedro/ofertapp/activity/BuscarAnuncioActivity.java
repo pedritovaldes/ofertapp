@@ -1,17 +1,16 @@
 package com.example.pedro.ofertapp.activity;
 
-import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,7 +22,7 @@ import com.example.pedro.ofertapp.model.User;
 /**
  * Created by Pedro on 18/06/2017.
  */
-public class BuscarAnuncioActivity extends AppCompatActivity {
+public class BuscarAnuncioActivity extends AppCompatActivity{
 
     private User usuario_loggeado;
     private Spinner spinner_sectores;
@@ -35,9 +34,9 @@ public class BuscarAnuncioActivity extends AppCompatActivity {
     private String[] provincias = {"Seleccionar", "Álava", "Albaecete","Alicante", "Almería"};
 
     private Spinner sectorProfesional, selectedProvincia;
-    private CheckBox horas, dias, mes, noFecha;
     private EditText precio_max;
-    private String fechaSeleccionada;
+    private TextView fecha;
+    private Button buscarAnuncio;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -62,87 +61,45 @@ public class BuscarAnuncioActivity extends AppCompatActivity {
         sectorProfesional = (Spinner)findViewById(R.id.buscar_anuncio_sector);
         selectedProvincia = (Spinner)findViewById(R.id.buscar_anuncio_provincia);
         precio_max = (EditText)findViewById(R.id.buscar_anuncio_precio_servicio);
-        /*horas = (CheckBox)findViewById(R.id.checkBoxFecha24Horas);
-        dias = (CheckBox)findViewById(R.id.checkBoxFecha7Dias);
-        mes = (CheckBox)findViewById(R.id.checkBoxFechaMes);
-        noFecha = (CheckBox)findViewById(R.id.checkBoxFechaSinFecha);
+        fecha = (TextView)findViewById(R.id.showDate);
 
-        horas.setOnClickListener(new View.OnClickListener() {
+        buscarAnuncio = (Button)findViewById(R.id.button_buscar_anuncio);
+        buscarAnuncio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onCheckboxClicked(v, horas, dias, mes, noFecha);
+                lanzarListadoAnuncios();
             }
         });
-
-        dias.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCheckboxClicked(v, horas, dias, mes, noFecha);
-            }
-        });
-
-        mes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCheckboxClicked(v, horas, dias, mes, noFecha);
-            }
-        });
-
-        noFecha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCheckboxClicked(v, horas, dias, mes, noFecha);
-            }
-        });*/
     }
 
-    /*private void onCheckboxClicked(View v, CheckBox horas, CheckBox dias, CheckBox mes, CheckBox noFecha) {
-
-        switch (v.getId()) {
-            case R.id.checkBoxFecha24Horas:
-                if (horas.isChecked()) {
-                    dias.setChecked(false);
-                    mes.setChecked(false);
-                    noFecha.setChecked(false);
-                    fechaSeleccionada = "horas";
-                }
-                break;
-            case R.id.checkBoxFecha7Dias:
-                if(dias.isChecked()) {
-                    horas.setChecked(false);
-                    mes.setChecked(false);
-                    noFecha.setChecked(false);
-                    fechaSeleccionada = "dias";
-                }
-                break;
-            case R.id.checkBoxFechaMes:
-                if(mes.isChecked()) {
-                    horas.setChecked(false);
-                    dias.setChecked(false);
-                    noFecha.setChecked(false);
-                    fechaSeleccionada = "mes";
-                }
-                break;
-            case R.id.checkBoxFechaSinFecha:
-                if(noFecha.isChecked()){
-                    horas.setChecked(false);
-                    dias.setChecked(false);
-                    mes.setChecked(false);
-                    fechaSeleccionada = "noFecha";
-                }
-                break;
-            default:
-                horas.setChecked(true);
-                dias.setChecked(true);
-                mes.setChecked(true);
-                noFecha.setChecked(true);
-                fechaSeleccionada = "noFecha";
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                Intent intent= new Intent();
+                intent.putExtra("user", usuario_loggeado);
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
         }
-    }*/
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void lanzarListadoAnuncios() {
+        Intent i = new Intent(this, ListadoAnunciosActivity.class);
+        i.putExtra("user", usuario_loggeado);
+        i.putExtra("sector", sectorProfesional.getSelectedItem().toString());
+        i.putExtra("provincia", selectedProvincia.getSelectedItem().toString());
+        i.putExtra("precio", precio_max.getText().toString());
+        i.putExtra("fecha", fecha.getText().toString());
+        startActivity(i);
     }
 
     private void setColorSpinner(Spinner spinner) {

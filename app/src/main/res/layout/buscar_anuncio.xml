@@ -164,55 +164,6 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/showDate"
                         android:textSize="18dp"/>
-
-                    <!--<CheckBox
-                        android:id="@+id/checkBoxFecha24Horas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:checked="false"
-                        android:padding="20dp"
-                        android:text="@string/buscarAnuncio24Horas"
-                        android:textColor="#000000"
-                        android:textSize="@dimen/activity_horizontal_margin"
-                        android:textStyle="bold|italic"/>
-
-                    <CheckBox
-                        android:id="@+id/checkBoxFecha7Dias"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:checked="false"
-                        android:padding="20dp"
-                        android:text="@string/buscarAnuncio7Dias"
-                        android:textColor="#000000"
-                        android:textSize="@dimen/activity_horizontal_margin"
-                        android:textStyle="bold|italic" />
-
-                    <CheckBox
-                        android:id="@+id/checkBoxFechaMes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:checked="false"
-                        android:padding="20dp"
-                        android:text="@string/buscarAnuncioMes"
-                        android:textColor="#000000"
-                        android:textSize="@dimen/activity_horizontal_margin"
-                        android:textStyle="bold|italic" />
-
-                    <CheckBox
-                        android:id="@+id/checkBoxFechaSinFecha"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:checked="false"
-                        android:padding="20dp"
-                        android:text="@string/buscarAnuncioSinFecha"
-                        android:textColor="#000000"
-                        android:textSize="@dimen/activity_horizontal_margin"
-                        android:textStyle="bold|italic" />-->
-
                     </LinearLayout>
 
                 </LinearLayout>
