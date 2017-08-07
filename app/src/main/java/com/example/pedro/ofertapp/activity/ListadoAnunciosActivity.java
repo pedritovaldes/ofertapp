@@ -100,7 +100,7 @@ public class ListadoAnunciosActivity extends AppCompatActivity implements LoadLi
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
         //Toast.makeText(this, mAndroidMapList.get(i).get(KEY_TITULO),Toast.LENGTH_LONG).show();
-        /*Intent detalleIntent = new Intent(this, DetalleAnuncioActivity.class);
+        Intent detalleIntent = new Intent(this, ListadoDetalleAnuncioActivity.class);
         detalleIntent.putExtra("userLogged", usuario_loggeado);
         detalleIntent.putExtra("idAnuncio",mAndroidMapList.get(i).get(KEY_ID));
         detalleIntent.putExtra("tituloAnuncio", mAndroidMapList.get(i).get(KEY_TITULO));
@@ -108,7 +108,10 @@ public class ListadoAnunciosActivity extends AppCompatActivity implements LoadLi
         detalleIntent.putExtra("provinciaAnuncio", mAndroidMapList.get(i).get(KEY_PROVINCIA));
         detalleIntent.putExtra("precioAnuncio", mAndroidMapList.get(i).get(KEY_PRECIO_MAX));
         detalleIntent.putExtra("descripcionAnuncio", mAndroidMapList.get(i).get(KEY_DESCRIPCION));
-        startActivity(detalleIntent);*/
+        detalleIntent.putExtra("nombreUsuario", mAndroidMapList.get(i).get(KEY_NAME));
+        detalleIntent.putExtra("emailUsuario", mAndroidMapList.get(i).get(KEY_EMAIL));
+        detalleIntent.putExtra("telefonoUsuario", mAndroidMapList.get(i).get(KEY_TELEFONO));
+        startActivity(detalleIntent);
     }
 
     private void loadListView() {

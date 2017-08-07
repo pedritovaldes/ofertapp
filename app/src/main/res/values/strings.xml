@@ -78,5 +78,12 @@
     <string name="buscar_anuncio_button">Voy a tener suerte</string>
     <string name="botonMostrarFecha">Después del...</string>
 
+    <!-- Detalle listado publico -->
+    <string name="detalleListadoTituloAnuncio">Título</string>
+    <string name="detalleListadoProvinciaAnuncio">Provincia</string>
+    <string name="detalleListadoSectorAnuncio">Sector</string>
+    <string name="detalleListadoPrecioAnuncio">Precio</string>
+    <string name="detalleListadoDescripcionAnuncio">Descripción</string>
+
     <!--Editar perfil usuario -->
 </resources>
