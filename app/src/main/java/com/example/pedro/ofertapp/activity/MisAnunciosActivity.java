@@ -39,6 +39,7 @@ public class MisAnunciosActivity extends AppCompatActivity implements LoadJSONTa
     private static final String KEY_SECTOR_PROF = "sector_profesional";
     private static final String KEY_PRECIO_MAX = "precio_maximo";
     private static final String KEY_DESCRIPCION = "descripcion";
+    private String finalUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,9 @@ public class MisAnunciosActivity extends AppCompatActivity implements LoadJSONTa
         mListView = (ListView) findViewById(R.id.list_view);
         mListView.setOnItemClickListener(this);
 
-        this.URL = URL + this.usuario_loggeado.getId() + "/anuncios";
+        this.finalUrl = URL + this.usuario_loggeado.getId().toString() + "/anuncios";
 
-        new LoadJSONTask(this).execute(URL);
+        new LoadJSONTask(this).execute(this.finalUrl);
     }
 
     @Override
