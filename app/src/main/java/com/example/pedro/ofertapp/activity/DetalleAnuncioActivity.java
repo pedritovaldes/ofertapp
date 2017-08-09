@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -123,22 +125,39 @@ public class DetalleAnuncioActivity extends AppCompatActivity {
 
     private void setAdapterSpinnerSectores(Bundle bundle) {
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sectores);
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, sectores);
         spinner_sectores = (Spinner)findViewById(R.id.detalleSectorProfesional);
         spinner_sectores.setAdapter(adapter);
 
         int spinnerPositionSectores = adapter.getPosition(this.sectorAnuncio);
         spinner_sectores.setSelection(spinnerPositionSectores);
+
+        setColorSpinner(spinner_sectores);
     }
 
     private void setAdapterSpinnerProvincias(Bundle bundle) {
 
-        ArrayAdapter adapterProvincias = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, provincias);
+        ArrayAdapter adapterProvincias = new ArrayAdapter<String>(this, R.layout.spinner_item, provincias);
         spinner_provincias = (Spinner)findViewById(R.id.detalleProvincia);
         spinner_provincias.setAdapter(adapterProvincias);
 
         int spinnerPositionProvincias = adapterProvincias.getPosition(this.provinciaAnuncio);
         spinner_provincias.setSelection(spinnerPositionProvincias);
+
+        setColorSpinner(spinner_provincias);
+    }
+
+    private void setColorSpinner(Spinner spinner) {
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                ((TextView) parentView.getChildAt(0)).setTextColor(Color.WHITE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
     }
 
     private void confirmDelete() {
