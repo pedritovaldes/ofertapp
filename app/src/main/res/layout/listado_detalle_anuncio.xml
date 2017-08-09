@@ -78,8 +78,7 @@
                 android:layout_marginTop="50px"
                 android:layout_marginLeft="50px"
                 android:text="@string/detalleListadoTituloAnuncio"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_gravity="center"/>
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
             <TextView
                 android:id="@+id/detalleListadoTitulo"
                 android:layout_width="match_parent"
@@ -103,8 +102,7 @@
                 android:layout_marginTop="50px"
                 android:layout_marginLeft="50px"
                 android:text="@string/detalleListadoProvinciaAnuncio"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_gravity="center"/>
+                android:textAppearance="?android:attr/textAppearanceLarge" />
             <TextView
                 android:id="@+id/detalleListadoProvincia"
                 android:layout_width="match_parent"
@@ -128,8 +126,7 @@
                 android:layout_marginTop="50px"
                 android:layout_marginLeft="50px"
                 android:text="@string/detalleListadoSectorAnuncio"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_gravity="center"/>
+                android:textAppearance="?android:attr/textAppearanceLarge" />
             <TextView
                 android:id="@+id/detalleListadoSector"
                 android:layout_width="match_parent"
@@ -153,8 +150,7 @@
                 android:layout_marginTop="50px"
                 android:layout_marginLeft="50px"
                 android:text="@string/detalleListadoPrecioAnuncio"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_gravity="center"/>
+                android:textAppearance="?android:attr/textAppearanceLarge" />
             <TextView
                 android:id="@+id/detalleListadoPrecio"
                 android:layout_width="match_parent"
@@ -178,8 +174,7 @@
                 android:layout_marginTop="50px"
                 android:layout_marginLeft="50px"
                 android:text="@string/detalleListadoDescripcionAnuncio"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_gravity="center"/>
+                android:textAppearance="?android:attr/textAppearanceLarge" />
             <TextView
                 android:id="@+id/detalleListadoDescripcion"
                 android:layout_width="match_parent"
