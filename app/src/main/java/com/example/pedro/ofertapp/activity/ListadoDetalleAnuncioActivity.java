@@ -1,9 +1,15 @@
 package com.example.pedro.ofertapp.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.pedro.ofertapp.R;
@@ -20,6 +26,7 @@ public class ListadoDetalleAnuncioActivity extends AppCompatActivity {
 
     private TextView nombreUsuarioTextView, emailUsuarioTextView, telefonoUsuarioTextView, tituloAnuncioTextView, sectorAnuncioTextView,
     precioAnuncioTextView, provinciaAnuncioTextView, descripcionAnuncioTextView;
+    final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,21 @@ public class ListadoDetalleAnuncioActivity extends AppCompatActivity {
 
         telefonoUsuarioTextView = (TextView)findViewById(R.id.telefonoUsuario);
         telefonoUsuarioTextView.setText(telefonoUsuario);
+
+        tituloAnuncioTextView = (TextView)findViewById(R.id.detalleListadoTitulo);
+        tituloAnuncioTextView.setText(tituloAnuncio);
+
+        provinciaAnuncioTextView = (TextView)findViewById(R.id.detalleListadoProvincia);
+        provinciaAnuncioTextView.setText(provinciaAnuncio);
+
+        sectorAnuncioTextView = (TextView)findViewById(R.id.detalleListadoSector);
+        sectorAnuncioTextView.setText(sectorAnuncio);
+
+        precioAnuncioTextView = (TextView)findViewById(R.id.detalleListadoPrecio);
+        precioAnuncioTextView.setText(precioAnuncio);
+
+        descripcionAnuncioTextView = (TextView)findViewById(R.id.detalleListadoDescripcion);
+        descripcionAnuncioTextView.setText(descripcionAnuncio);
 
     }
 

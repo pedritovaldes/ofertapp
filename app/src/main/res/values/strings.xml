@@ -82,7 +82,7 @@
     <string name="detalleListadoTituloAnuncio">Título</string>
     <string name="detalleListadoProvinciaAnuncio">Provincia</string>
     <string name="detalleListadoSectorAnuncio">Sector</string>
-    <string name="detalleListadoPrecioAnuncio">Precio</string>
+    <string name="detalleListadoPrecioAnuncio">Precio max</string>
     <string name="detalleListadoDescripcionAnuncio">Descripción</string>
 
     <!--Editar perfil usuario -->

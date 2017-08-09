@@ -32,7 +32,7 @@ public class ListadoAnunciosActivity extends AppCompatActivity implements LoadLi
 
     private List<HashMap<String, String>> mAndroidMapList = new ArrayList<>();
 
-    private static final String KEY_ID = "id";
+    private static final String KEY_ID_ANUNCIO = "idAnuncio";
     private static final String KEY_TITULO = "titulo";
     private static final String KEY_PROVINCIA = "provincia";
     private static final String KEY_SECTOR_PROF = "sector_profesional";
@@ -44,6 +44,7 @@ public class ListadoAnunciosActivity extends AppCompatActivity implements LoadLi
 
 
     private String provincia, sector, precio, fecha;
+    private String finalUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +62,11 @@ public class ListadoAnunciosActivity extends AppCompatActivity implements LoadLi
         mListView = (ListView) findViewById(R.id.list_view);
         mListView.setOnItemClickListener(this);
 
-        this.URL = URL + sector + "/" + provincia
+        this.finalUrl = URL + sector + "/" + provincia
                 + "/" + precio;
 
         //new LoadListadoAnunciosTask(this).execute(URL);
-        new LoadListadoAnunciosTask(this).execute(URL);
+        new LoadListadoAnunciosTask(this).execute(this.finalUrl);
     }
 
     @Override
@@ -75,7 +76,7 @@ public class ListadoAnunciosActivity extends AppCompatActivity implements LoadLi
 
             HashMap<String, String> map = new HashMap<>();
 
-            map.put(KEY_ID, listadoanuncio.getId().toString());
+            map.put(KEY_ID_ANUNCIO, listadoanuncio.getIdAnuncio().toString());
             map.put(KEY_TITULO, listadoanuncio.getTitulo());
             map.put(KEY_PROVINCIA, listadoanuncio.getProvincia());
             map.put(KEY_SECTOR_PROF, listadoanuncio.getSector_profesional());
@@ -102,7 +103,7 @@ public class ListadoAnunciosActivity extends AppCompatActivity implements LoadLi
         //Toast.makeText(this, mAndroidMapList.get(i).get(KEY_TITULO),Toast.LENGTH_LONG).show();
         Intent detalleIntent = new Intent(this, ListadoDetalleAnuncioActivity.class);
         detalleIntent.putExtra("userLogged", usuario_loggeado);
-        detalleIntent.putExtra("idAnuncio",mAndroidMapList.get(i).get(KEY_ID));
+        detalleIntent.putExtra("idAnuncio",mAndroidMapList.get(i).get(KEY_ID_ANUNCIO));
         detalleIntent.putExtra("tituloAnuncio", mAndroidMapList.get(i).get(KEY_TITULO));
         detalleIntent.putExtra("sectorAnuncio", mAndroidMapList.get(i).get(KEY_SECTOR_PROF));
         detalleIntent.putExtra("provinciaAnuncio", mAndroidMapList.get(i).get(KEY_PROVINCIA));

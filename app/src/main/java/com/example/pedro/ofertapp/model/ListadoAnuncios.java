@@ -5,9 +5,9 @@ package com.example.pedro.ofertapp.model;
  */
 public class ListadoAnuncios {
 
-    private Integer id;
+    private Integer idAnuncio;
     private String titulo;
-    private Integer user_id;
+    private Integer idUser;
     private String provincia;
     private String sector_profesional;
     private Integer precio_maximo;
@@ -16,12 +16,20 @@ public class ListadoAnuncios {
     private String email;
     private String telefono;
 
-    public Integer getId() {
-        return id;
+    public Integer getIdAnuncio() {
+        return idAnuncio;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdAnuncio(Integer idAnuncio) {
+        this.idAnuncio = idAnuncio;
+    }
+
+    public Integer getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
     }
 
     public String getTitulo() {
@@ -30,14 +38,6 @@ public class ListadoAnuncios {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-
-    public Integer getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
     }
 
     public String getProvincia() {
