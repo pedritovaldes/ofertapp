@@ -89,8 +89,9 @@
 
 
     <!-- ActionBar AND logout messages-->
-    <string name="action_logout">Salir</string>
+    <string name="action_logout">Cerrar sesión</string>
     <string name="logoutMessage">¿Desea salir de la aplicación?</string>
     <string name="confirmLogout">Sí</string>
+    <string name="action_nuevo">Nuevo anuncio</string>
 
 </resources>

@@ -87,6 +87,7 @@ public class NuevoAnuncioActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        menu.findItem(R.id.action_new).setVisible(false);
         return true;
     }
 
