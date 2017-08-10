@@ -60,6 +60,12 @@ public class MisAnunciosActivity extends AppCompatActivity implements LoadJSONTa
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode == 2404) {
@@ -82,14 +88,13 @@ public class MisAnunciosActivity extends AppCompatActivity implements LoadJSONTa
             case R.id.menu_logout:
                 confirmLogout();
                 return true;
+            case R.id.action_new:
+                Intent i = new Intent(this, NuevoAnuncioActivity.class);
+                i.putExtra("user",usuario_loggeado);
+                startActivityForResult(i,2404);
+                return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     private void confirmLogout() {
