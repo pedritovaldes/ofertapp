@@ -7,7 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Contacts;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,6 +30,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import static com.example.pedro.ofertapp.R.id.info;
 
 /**
  * Created by Pedro on 19/12/2016.
@@ -94,6 +99,50 @@ public class ProfileActivity extends AppCompatActivity {
                 lanzarMiPerfil(usuario_loggeado);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_logout:
+                confirmLogout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    private void confirmLogout() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+
+        builder.setMessage(R.string.logoutMessage)
+                .setTitle(R.string.confirmTitle)
+                .setPositiveButton(R.string.optionYes,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(ProfileActivity.this, LoginActivity.class)
+                                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            }
+                        })
+                .setNegativeButton(R.string.optionCancel,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     public void lanzarBuscarAnuncio(User user) {

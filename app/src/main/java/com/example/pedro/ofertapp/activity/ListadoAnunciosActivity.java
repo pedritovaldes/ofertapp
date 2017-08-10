@@ -1,8 +1,12 @@
 package com.example.pedro.ofertapp.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
@@ -67,6 +71,54 @@ public class ListadoAnunciosActivity extends AppCompatActivity implements LoadLi
 
         //new LoadListadoAnunciosTask(this).execute(URL);
         new LoadListadoAnunciosTask(this).execute(this.finalUrl);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                Intent intent= new Intent();
+                intent.putExtra("user", usuario_loggeado);
+                setResult(RESULT_OK, intent);
+                finish();
+                return true;
+            case R.id.menu_logout:
+                confirmLogout();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void confirmLogout() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ListadoAnunciosActivity.this);
+
+        builder.setMessage(R.string.logoutMessage)
+                .setTitle(R.string.confirmTitle)
+                .setPositiveButton(R.string.optionYes,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(ListadoAnunciosActivity.this, LoginActivity.class)
+                                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            }
+                        })
+                .setNegativeButton(R.string.optionCancel,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override

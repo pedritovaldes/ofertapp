@@ -1,6 +1,8 @@
 package com.example.pedro.ofertapp.activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -64,6 +67,12 @@ public class ListadoDetalleAnuncioActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
@@ -73,8 +82,36 @@ public class ListadoDetalleAnuncioActivity extends AppCompatActivity {
                 setResult(RESULT_OK, intent);
                 finish();
                 return true;
+            case R.id.menu_logout:
+                confirmLogout();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void confirmLogout() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ListadoDetalleAnuncioActivity.this);
+
+        builder.setMessage(R.string.logoutMessage)
+                .setTitle(R.string.confirmTitle)
+                .setPositiveButton(R.string.optionYes,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(ListadoDetalleAnuncioActivity.this, LoginActivity.class)
+                                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            }
+                        })
+                .setNegativeButton(R.string.optionCancel,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void getAnuncio(Bundle bundle) {

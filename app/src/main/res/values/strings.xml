@@ -86,4 +86,11 @@
     <string name="detalleListadoDescripcionAnuncio">Descripción</string>
 
     <!--Editar perfil usuario -->
+
+
+    <!-- ActionBar AND logout messages-->
+    <string name="action_logout">Salir</string>
+    <string name="logoutMessage">¿Desea salir de la aplicación?</string>
+    <string name="confirmLogout">Sí</string>
+
 </resources>
