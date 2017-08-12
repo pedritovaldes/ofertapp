@@ -36,23 +36,4 @@
         android:onClick="lanzarRegistro"
         android:gravity="center"
         android:theme="@style/MyButton"/>
-
-    <!--<Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Acercade"
-        android:id="@+id/button_acercaDe"
-        android:onClick="lanzarAcercaDe"
-        android:gravity="center" />-->
-
-    <TextView android:id="@+id/link_mirar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="Voy a mirar"
-        android:gravity="center"
-        android:textSize="16dip"
-        android:paddingTop="25dp"
-        android:textColor="#030303"/>
-
 </LinearLayout>
