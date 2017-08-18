@@ -67,7 +67,7 @@ public class ListadoAnunciosActivity extends AppCompatActivity implements LoadLi
         mListView.setOnItemClickListener(this);
 
         this.finalUrl = URL + sector + "/" + provincia
-                + "/" + precio;
+                + "/" + precio + "/" + fecha;
 
         //new LoadListadoAnunciosTask(this).execute(URL);
         new LoadListadoAnunciosTask(this).execute(this.finalUrl);
