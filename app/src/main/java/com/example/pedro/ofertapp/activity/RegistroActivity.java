@@ -27,6 +27,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 /**
  * Created by Pedro on 23/11/2016.
  */
@@ -38,7 +45,8 @@ public class RegistroActivity extends AppCompatActivity{
     private EditText etEmail;
     private EditText etDescripcion;
 
-    //private Context context;
+    private Client client;
+    private WebTarget target;
 
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
@@ -79,19 +87,18 @@ public class RegistroActivity extends AppCompatActivity{
         String email = etEmail.getText().toString();
         String desc = etDescripcion.getText().toString();
 
-        new AsyncRegistro().execute(nombre, telf, email, desc);
+        //new AsyncRegistro().execute(nombre, telf, email, desc);
+        new AsyncRegistroJerseyClient().execute(nombre, telf, email, desc);
     }
 
-    private class AsyncRegistro extends AsyncTask<String, String, String> {
+    private class AsyncRegistroJerseyClient extends AsyncTask<String, String, String> {
 
         ProgressDialog pdLoading = new ProgressDialog(RegistroActivity.this);
-        HttpURLConnection conn;
-        URL url = null;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pdLoading.setMessage("Cargando...");
+            pdLoading.setMessage("Comprobando...");
             pdLoading.setCancelable(false);
             pdLoading.show();
         }
@@ -99,69 +106,30 @@ public class RegistroActivity extends AppCompatActivity{
         @Override
         protected String doInBackground(String... params) {
 
+            client = ClientBuilder.newClient();
+            target = client.target(getString(R.string.emulatorDeviceEndpoint));
+
+
+            JSONObject json = new JSONObject();
             try {
-                url = new URL("http://10.0.2.2:80/api/v1/registro");
-
-            } catch (MalformedURLException e) {
+                json.put("nombre", params[0]);
+                json.put("telefono", params[1]);
+                json.put("email", params[2]);
+                json.put("descripcion", params[3]);
+            } catch (JSONException e) {
                 e.printStackTrace();
-                return "exception";
             }
+            String input = json.toString();
+            target = target.path("registro");
 
-            try  {
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(READ_TIMEOUT);
-                conn.setConnectTimeout(CONNECTION_TIMEOUT);
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty( "charset", "utf-8");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
+            Response response = target.request(MediaType.APPLICATION_JSON)
+                    .post(Entity.entity(input, MediaType.APPLICATION_JSON),Response.class);
 
-                //Agregamos parametros a la URL
-                Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("nombre", params[0])
-                        .appendQueryParameter("telefono", params[1])
-                        .appendQueryParameter("email", params[2])
-                        .appendQueryParameter("descripcion", params[3]);
-
-                String query = builder.build().getEncodedQuery();
-
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-
-                writer.write(query);
-                writer.flush();
-                writer.close();
-                os.close();
-                conn.connect();
-
-            } catch (IOException e1) {
-
-                e1.printStackTrace();
-                return "exception";
-            }
-
-            try {
-
-                int response_code = conn.getResponseCode();
-
-                if (response_code == HttpURLConnection.HTTP_OK) {
-
-                    //Leemos lo que nos devuelve el servidor
-                    InputStream input = conn.getInputStream();
-                    String result = convertStreamToString(input);
-                    input.close();
-
-                    //Pasamos a onPostExecute
-                    return result.toString();
-
-                } else {
-                    return ("unsuccesful");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "exception";
+            if(response.getStatus() == 200) {
+                String output = response.readEntity(String.class);
+                return output;
+            } else {
+                return ("unsuccesful");
             }
         }
 
@@ -195,10 +163,5 @@ public class RegistroActivity extends AppCompatActivity{
                 e.printStackTrace();
             }
         }
-    }
-
-    static String convertStreamToString(java.io.InputStream is) {
-        java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
-        return s.hasNext() ? s.next() : "";
     }
 }
