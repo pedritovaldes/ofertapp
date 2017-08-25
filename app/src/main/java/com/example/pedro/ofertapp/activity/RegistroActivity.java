@@ -98,7 +98,7 @@ public class RegistroActivity extends AppCompatActivity{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pdLoading.setMessage("Comprobando...");
+            pdLoading.setMessage("Espera un momento");
             pdLoading.setCancelable(false);
             pdLoading.show();
         }
