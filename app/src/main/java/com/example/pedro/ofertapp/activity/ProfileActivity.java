@@ -31,6 +31,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import static com.example.pedro.ofertapp.R.id.info;
 
 /**
@@ -49,6 +56,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
+
+    private Client client;
+    private WebTarget target;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -206,21 +216,16 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void eliminarPerfil(User user_logged) {
 
-        new AsyncLogin().execute(user_logged.getId());
-        //Intent i = new Intent(ProfileActivity.this,LoginActivity.class);
-        //startActivity(i);
+        new AsyncDeleteProfile().execute(user_logged.getId());
     }
 
-    private class AsyncLogin extends AsyncTask<Integer, String, String> {
+    private class AsyncDeleteProfile extends AsyncTask<Integer, String, String> {
 
         ProgressDialog pdLoading = new ProgressDialog(ProfileActivity.this);
-        HttpURLConnection conn;
-        URL url = null;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //pdLoading.setMessage("Comprobando...");
             pdLoading.setCancelable(false);
             pdLoading.show();
         }
@@ -228,57 +233,19 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Integer... params) {
 
-            try {
-                url = new URL("http://10.0.2.2:80/api/v1/user/"+params[0]);
+            client = ClientBuilder.newClient();
+            target = client.target(getString(R.string.emulatorDeviceEndpoint));
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                return "exception";
-            }
+            target = target.path("user/"+params[0]);
 
-            try  {
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(READ_TIMEOUT);
-                conn.setConnectTimeout(CONNECTION_TIMEOUT);
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                conn.setRequestMethod("DELETE");
-                conn.setRequestProperty( "charset", "utf-8");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
+            Response response = target.request(MediaType.APPLICATION_JSON)
+                    .delete(Response.class);
 
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-
-                writer.flush();
-                writer.close();
-                os.close();
-                conn.connect();
-
-            } catch (IOException e1) {
-
-                e1.printStackTrace();
-                return "exception";
-            }
-
-            try {
-
-                int response_code = conn.getResponseCode();
-                if (response_code == HttpURLConnection.HTTP_OK) {
-
-                    //Leemos lo que nos devuelve el servidor
-                    InputStream input = conn.getInputStream();
-                    String result = convertStreamToString(input);
-                    input.close();
-
-                    return result.toString();
-
-                } else {
-                    return ("unsuccesful");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "exception";
+            if(response.getStatus() == 200) {
+                String output = response.readEntity(String.class);
+                return output;
+            } else {
+                return ("unsuccesful");
             }
         }
 
@@ -310,10 +277,5 @@ public class ProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-
-    static String convertStreamToString(java.io.InputStream is) {
-        java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
-        return s.hasNext() ? s.next() : "";
     }
 }
